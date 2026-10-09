@@ -39,7 +39,6 @@ def ensure_database_schema() -> None:
 
 
 ensure_database_schema()
-Base.metadata.create_all(bind=engine)
 
 
 def demo_password_for_user(user_data: dict) -> str | None:

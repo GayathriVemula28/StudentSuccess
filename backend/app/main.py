@@ -1,4 +1,5 @@
 from pathlib import Path
+import os
 
 from dotenv import load_dotenv
 
@@ -183,7 +184,8 @@ def seed_demo_data() -> None:
     db.close()
 
 
-seed_demo_data()
+if os.getenv('APP_ENV', 'development').lower() != 'production':
+    seed_demo_data()
 
 
 @app.get('/')

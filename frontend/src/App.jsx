@@ -277,13 +277,15 @@ function App() {
     <BrowserRouter>
       <AuthProvider>
         <Routes>
-          <Route path="/" element={<SignupRolePickerPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<SignupRolePickerPage />} />
-          <Route path="/signup/student" element={<StudentSignupPage />} />
-          <Route path="/signup/faculty" element={<FacultySignupPage />} />
-          <Route path="/signup/admin" element={<AdminSignupPage />} />
+          <Route path="/" element={<PublicOnlyRoute><LandingPage /></PublicOnlyRoute>} />
+          <Route path="/login" element={<PublicOnlyRoute><LoginPage /></PublicOnlyRoute>} />
+          <Route path="/signin" element={<PublicOnlyRoute><LoginPage /></PublicOnlyRoute>} />
+          <Route path="/signup" element={<PublicOnlyRoute><SignupRolePickerPage /></PublicOnlyRoute>} />
+          <Route path="/signup/student" element={<PublicOnlyRoute><StudentSignupPage /></PublicOnlyRoute>} />
+          <Route path="/signup/faculty" element={<PublicOnlyRoute><FacultySignupPage /></PublicOnlyRoute>} />
+          <Route path="/signup/admin" element={<PublicOnlyRoute><AdminSignupPage /></PublicOnlyRoute>} />
           <Route path="/student" element={<ProtectedRoute role="student"><StudentDashboard /></ProtectedRoute>} />
+          <Route path="/dashboard" element={<ProtectedRoute role="student"><StudentDashboard /></ProtectedRoute>} />
           <Route path="/faculty" element={<ProtectedRoute role="faculty"><FacultyDashboard /></ProtectedRoute>} />
           <Route path="/admin" element={<ProtectedRoute role="admin"><AdminDashboard /></ProtectedRoute>} />
           <Route path="*" element={<Navigate to="/signup" replace />} />
@@ -293,10 +295,17 @@ function App() {
   )
 }
 
+function PublicOnlyRoute({ children }) {
+  const { user, loading } = useAuth()
+  if (loading) return <div className="grid min-h-screen place-items-center text-sm font-medium text-slate-500">Checking your secure session…</div>
+  if (user) return <Navigate to={user.role === 'student' ? '/dashboard' : `/${user.role}`} replace />
+  return children
+}
+
 function ProtectedRoute({ role, children }) {
   const { user, loading } = useAuth()
   if (loading) return <div className="grid min-h-screen place-items-center text-sm font-medium text-slate-500">Checking your secure session…</div>
-  if (!user) return <Navigate to="/login" replace />
+  if (!user) return <Navigate to="/signin" replace />
   if (user.role !== role) return <Navigate to={`/${user.role}`} replace />
   return children
 }
@@ -332,7 +341,7 @@ function LandingPage() {
           <a href="#impact" className="transition hover:text-slate-900">Impact</a>
           <a href="#plan" className="transition hover:text-slate-900">Plan</a>
         </nav>
-        <button onClick={() => navigate('/login')} className="rounded-full bg-slate-900 px-5 py-2.5 text-sm font-medium text-white shadow-lg shadow-slate-200 transition hover:bg-slate-800">
+        <button onClick={() => navigate('/signin')} className="rounded-full bg-slate-900 px-5 py-2.5 text-sm font-medium text-white shadow-lg shadow-slate-200 transition hover:bg-slate-800">
           Student Login
         </button>
       </header>
@@ -351,11 +360,11 @@ function LandingPage() {
               StudentPulse helps learners grow with clear score insights, personal recommendations, focus routines, and career guidance designed for real academic progress.
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
-              <button onClick={() => navigate('/login')} className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-indigo-600 to-violet-600 px-6 py-3 text-sm font-medium text-white shadow-lg shadow-indigo-200 transition hover:opacity-95">
+              <button onClick={() => navigate('/signin')} className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-indigo-600 to-violet-600 px-6 py-3 text-sm font-medium text-white shadow-lg shadow-indigo-200 transition hover:opacity-95">
                 Explore dashboard
                 <ArrowRight className="h-4 w-4" />
               </button>
-              <button onClick={() => navigate('/login')} className="rounded-full border border-slate-200 bg-white px-6 py-3 text-sm font-medium text-slate-700 shadow-sm transition hover:border-slate-300 hover:text-slate-900">
+              <button onClick={() => navigate('/signup')} className="rounded-full border border-slate-200 bg-white px-6 py-3 text-sm font-medium text-slate-700 shadow-sm transition hover:border-slate-300 hover:text-slate-900">
                 Start learning
               </button>
             </div>
@@ -481,7 +490,7 @@ function LandingPage() {
       <footer className="border-t border-slate-200 bg-white py-8">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-6 text-sm text-slate-600 md:flex-row lg:px-10">
           <p>© 2026 StudentPulse AI. Designed for student growth and improvement.</p>
-          <button onClick={() => navigate('/login')} className="inline-flex items-center gap-2 font-medium text-indigo-600 hover:text-indigo-700">
+          <button onClick={() => navigate('/signin')} className="inline-flex items-center gap-2 font-medium text-indigo-600 hover:text-indigo-700">
             Go to dashboard <ArrowRight className="h-4 w-4" />
           </button>
         </div>
@@ -518,7 +527,7 @@ function LoginPage() {
         ? await loginDemoUser(form)
         : await signInFirebaseStudent({ email: form.email.trim(), password: form.password })
       adoptSession(user)
-      navigate(`/${user.role}`)
+      navigate(user.role === 'student' ? '/dashboard' : `/${user.role}`)
     } catch (err) {
       setError(demoMode || !isFirebaseConfigured ? err.message : getFirebaseAuthError(err))
     } finally {
@@ -533,7 +542,7 @@ function LoginPage() {
     try {
       const user = await signInWithGoogle({ emailHint: form.email.trim() })
       adoptSession(user)
-      navigate(`/${user.role}`)
+      navigate(user.role === 'student' ? '/dashboard' : `/${user.role}`)
     } catch (err) {
       setError(getFirebaseAuthError(err))
     } finally {
@@ -981,7 +990,7 @@ function StudentSignupPage() {
           },
         })
         adoptSession(firebaseSession)
-        navigate('/student')
+        navigate('/dashboard')
         return
       }
 
@@ -1038,7 +1047,7 @@ function StudentSignupPage() {
         },
       })
       adoptSession(firebaseSession)
-      navigate('/student')
+      navigate('/dashboard')
     } catch (googleError) {
       setError(getFirebaseAuthError(googleError))
     } finally {
@@ -1107,7 +1116,7 @@ function StudentSignupPage() {
           {success && <div role="status" className="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-4 text-sm text-emerald-800"><p className="font-semibold">Registration submitted</p><p className="mt-1">{success}</p><p className="mt-2">After an administrator approves your account, you can sign in using your college email and the password you created.</p></div>}
 
           <div className="flex flex-col-reverse gap-3 border-t border-slate-100 pt-5 sm:flex-row sm:items-center sm:justify-between">
-            <button type="button" onClick={() => navigate('/login')} className="rounded-xl px-4 py-3 text-sm font-medium text-slate-600 transition hover:bg-slate-50">Already registered? Sign in</button>
+            <button type="button" onClick={() => navigate('/signin')} className="rounded-xl px-4 py-3 text-sm font-medium text-slate-600 transition hover:bg-slate-50">Already registered? Sign in</button>
             <button type="submit" disabled={loading || googleLoading || Boolean(success)} className="rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-indigo-200 transition hover:opacity-95 disabled:cursor-not-allowed disabled:opacity-60">{loading ? 'Creating account…' : success ? 'Submitted' : 'Create Account'}</button>
           </div>
           <p className="text-center text-xs text-slate-500">Firebase Authentication manages passwords; the app never stores them in your profile. When Firebase is not configured, signup uses the legacy demo backend.</p>
@@ -2109,7 +2118,7 @@ function DashboardShell({ title, user, navItems, activeTab, setActiveTab, conten
   const handleLogout = async () => {
     if (auth?.signOut) await auth.signOut()
     else logout()
-    navigate('/login')
+    navigate('/signin')
   }
 
   return (

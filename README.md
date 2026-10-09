@@ -56,6 +56,12 @@ C:\Users\Rajiya\AppData\Local\Programs\Python\Python312\python.exe -m venv .venv
 .venv\Scripts\python.exe -m uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 ```
 
+## Deploy on Render
+
+The root `render.yaml` defines the Vite frontend as a Render static site and FastAPI as a web service. In Render, choose **New → Blueprint**, connect `GayathriVemula28/StudentSuccess`, and deploy the Blueprint from `main`. Render prompts for `VITE_API_URL` and the Firebase web-app configuration during initial setup. Set `VITE_API_URL` to the deployed API origin (for example, `https://student-success-api.onrender.com`) and add the frontend's Render hostname to Firebase Authentication's authorized domains.
+
+The frontend build command is `npm ci && npm run build` with `frontend` as its root and `frontend/dist` as its publish directory. The backend installs `backend/requirements.txt` and starts with `uvicorn app.main:app --host 0.0.0.0 --port $PORT`. Render generates `JWT_SECRET_KEY`; do not commit secrets. The free backend uses the existing SQLite database on Render's ephemeral filesystem, so registrations and database changes are not durable across restarts or redeploys. Use managed Postgres or a persistent paid disk before relying on stored user data.
+
 ## AI Student Assistant
 
 The Student dashboard includes personalized suggestions and a chat assistant. The authenticated `POST /assistant/chat` endpoint uses the legacy backend JWT and resolves the student record from that token; it does not accept a student ID or retrieve another student's records. It sends only available aggregate academic, attendance, subject-mark, quiz, and assignment-score data to the configured provider.

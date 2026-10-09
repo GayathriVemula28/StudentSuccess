@@ -6,11 +6,11 @@ load_dotenv(Path(__file__).resolve().parents[2] / '.env')
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from sqlalchemy import inspect
 from sqlalchemy.orm import Session
 
-from .database import BASE_DIR, Base, SessionLocal, engine
+from .database import BASE_DIR, SessionLocal, engine
 from .models import User, Student
+from .migrations import upgrade_database
 from .routes.admin import router as admin_router
 from .routes.auth import hash_password, router as auth_router, verify_password
 from .routes.students import router as student_router
@@ -35,24 +35,7 @@ app.include_router(upload_router, prefix='/data')
 
 
 def ensure_database_schema() -> None:
-    db_path = BASE_DIR / 'studentpulse.db'
-    if not db_path.exists():
-        Base.metadata.create_all(bind=engine)
-        return
-
-    try:
-        inspector = inspect(engine)
-        if not inspector.has_table('users'):
-            Base.metadata.create_all(bind=engine)
-            return
-
-        user_columns = {column['name'] for column in inspector.get_columns('users')}
-        if 'status' not in user_columns or 'created_at' not in user_columns:
-            db_path.unlink(missing_ok=True)
-            Base.metadata.create_all(bind=engine)
-    except Exception:
-        db_path.unlink(missing_ok=True)
-        Base.metadata.create_all(bind=engine)
+    upgrade_database(engine)
 
 
 ensure_database_schema()

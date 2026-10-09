@@ -1,0 +1,11 @@
+student_id,cgpa,semester,subject_marks,assignment_score,quiz_score
+STU-1001,8.7,Semester 6,"Data Structures:88|DBMS:86|Operating Systems:80|Computer Networks:78|Software Engineering:84",82,88
+STU-1002,6.8,Semester 4,"Data Structures:72|DBMS:66|Operating Systems:62|Computer Networks:61|Software Engineering:64",70,72
+STU-1003,5.3,Semester 8,"Data Structures:55|DBMS:48|Operating Systems:50|Computer Networks:42|Software Engineering:45",46,52
+STU-1004,8.1,Semester 5,"Data Structures:82|DBMS:81|Operating Systems:80|Computer Networks:76|Software Engineering:79",80,85
+STU-1005,7.5,Semester 4,"Data Structures:79|DBMS:80|Operating Systems:74|Computer Networks:72|Software Engineering:76",75,81
+STU-1006,6.5,Semester 8,"Data Structures:68|DBMS:63|Operating Systems:61|Computer Networks:59|Software Engineering:64",62,68
+STU-1007,6.1,Semester 6,"Data Structures:61|DBMS:56|Operating Systems:54|Computer Networks:52|Software Engineering:60",58,63
+STU-1008,9.0,Semester 2,"Data Structures:91|DBMS:88|Operating Systems:84|Computer Networks:92|Software Engineering:89",89,92
+STU-1009,7.1,Semester 4,"Data Structures:71|DBMS:70|Operating Systems:65|Computer Networks:66|Software Engineering:68",69,74
+STU-1010,8.3,Semester 6,"Data Structures:85|DBMS:82|Operating Systems:78|Computer Networks:80|Software Engineering:84",82,87

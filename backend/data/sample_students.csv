@@ -1,0 +1,11 @@
+student_id,name,email,department,year,academic_score,attendance,lms,placement,skills,success_score,risk_level,risk_score,cgpa,semester
+STU-1001,Ananya Rao,ananya@pulse.edu,CSE,3rd Year,82,86,78,74,81,82,Low Risk,18,8.7,Semester 6
+STU-1002,Rohan Mehta,rohan@pulse.edu,ECE,2nd Year,66,68,58,52,60,61,Medium Risk,39,6.8,Semester 4
+STU-1003,Priya Shah,priya@pulse.edu,IT,4th Year,48,52,46,39,42,44,High Risk,56,5.3,Semester 8
+STU-1004,Kabir Singh,kabir@pulse.edu,CSE,3rd Year,80,93,72,61,78,76,Low Risk,24,8.1,Semester 5
+STU-1005,Neha Kulkarni,neha@pulse.edu,IT,2nd Year,78,71,82,48,65,70,Medium Risk,30,7.5,Semester 4
+STU-1006,Aditi Verma,aditi@pulse.edu,CSE,4th Year,62,59,50,63,67,58,Medium Risk,42,6.5,Semester 8
+STU-1007,Vikram Nair,vikram@pulse.edu,MECH,3rd Year,58,64,49,42,57,52,Medium Risk,48,6.1,Semester 6
+STU-1008,Ishita Joshi,ishita@pulse.edu,CSE,1st Year,90,92,87,72,86,88,Low Risk,12,9.0,Semester 2
+STU-1009,Manav Iyer,manav@pulse.edu,CSE,2nd Year,69,74,71,55,62,66,Medium Risk,34,7.1,Semester 4
+STU-1010,Sana Qureshi,sana@pulse.edu,AI&DS,3rd Year,81,83,76,69,80,77,Low Risk,23,8.3,Semester 6

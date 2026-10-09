@@ -1,0 +1,11 @@
+student_id,courses_completed,videos_watched,assignments_submitted,quiz_attempts,login_frequency,learning_hours
+STU-1001,7,42,9,12,8,21
+STU-1002,5,28,6,9,5,14
+STU-1003,3,16,3,5,3,7
+STU-1004,6,34,8,10,7,18
+STU-1005,7,40,9,11,8,20
+STU-1006,4,21,5,8,4,11
+STU-1007,4,18,5,6,4,10
+STU-1008,8,44,10,13,9,24
+STU-1009,5,26,7,10,6,14
+STU-1010,7,39,9,12,8,19

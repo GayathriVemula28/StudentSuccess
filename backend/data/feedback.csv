@@ -1,0 +1,11 @@
+student_id,faculty_name,subject,rating,comments
+STU-1001,Prof. Nair,Data Structures,4.8,"Strong analytical thinking and consistent effort."
+STU-1002,Prof. Sinha,DBMS,3.8,"Needs consistent assignment completion and improved attendance."
+STU-1003,Prof. Rao,Software Engineering,3.2,"Frequent absenteeism and missed deadlines are impacting academic progress."
+STU-1004,Prof. Raman,Operating Systems,4.5,"Excellent attendance and discipline; focus on placement readiness next."
+STU-1005,Prof. Malhotra,Data Structures,4.0,"Strong academics but low campus engagement and participation in events."
+STU-1006,Prof. Das,DBMS,3.7,"Strong conceptual understanding but inconsistent assignment follow-through."
+STU-1007,Prof. Arora,Software Engineering,3.5,"Shows potential but needs stronger internal motivation and participation."
+STU-1008,Prof. Arjun,Data Structures,4.9,"Excellent academic commitment and strong initiative."
+STU-1009,Prof. Kumar,DBMS,3.9,"Academic base is good but needs more consistent practice and mock interview exposure."
+STU-1010,Prof. Iqbal,Computer Networks,4.4,"Good performance and strong concept clarity; need more industry-focused project exposure."
